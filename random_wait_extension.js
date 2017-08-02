@@ -17,11 +17,13 @@ new (function() {
     // final argument. This should be called to indicate that the block can
     // stop waiting.
     ext.wait_random = function(callback) {
-        wait = Math.random();
-        console.log('Waiting for ' + wait + ' seconds');
-        window.setTimeout(function() {
+        $.get( "http://127.0.0.1:8000/", function( data ) {
+            console.log(data);
             callback();
-        }, wait*1000);
+        }, function(data) {
+            console.error(data);
+            callback();
+        });
     };
 
     // Block and block menu descriptions
