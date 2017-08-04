@@ -16,12 +16,12 @@ new (function() {
     // Functions for block with type 'w' will get a callback function as the 
     // final argument. This should be called to indicate that the block can
     // stop waiting.
-    ext.wait_random = function(callback) {
-        $.get( "http://127.0.0.1:8000/", function( data ) {
+    ext.send_score = function(name, score, callback) {
+        $.post('http://localhost:8000/score', {
+            name: name,
+            score: score
+        }, (data) => {
             console.log(data);
-            callback();
-        }, function(data) {
-            console.error(data);
             callback();
         });
     };
@@ -29,10 +29,10 @@ new (function() {
     // Block and block menu descriptions
     var descriptor = {
         blocks: [
-            ['w', 'wait for random time', 'wait_random'],
+            ['w', 'Send score %s name %n score', 'send_score', '', 0],
         ]
     };
 
     // Register the extension
-    ScratchExtensions.register('Random wait extension', descriptor, ext);
+    ScratchExtensions.register('flappy bird scoreboard', descriptor, ext);
 })();
